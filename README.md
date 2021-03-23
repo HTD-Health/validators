@@ -6,7 +6,7 @@ Simple TextFormField validator utility.
 
 ```yaml
 dependencies:
-  widgets_library:
+  validator:
     git: 
       url: https://github.com/HTD-Health/validators.git
       ref: 0.1.0
