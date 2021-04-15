@@ -8,8 +8,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  characters: 1.1.0-nullsafety.3
-  validators: 2.0.1
+  characters: 1.1.0
+  validators: 3.0.0
   flutter:
     sdk: flutter
 
