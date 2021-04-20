@@ -280,13 +280,7 @@ abstract class Validators {
   }) =>
       (String value) {
         if (!value.isDouble) return errorMessage;
-
         final number = num.parse(value);
-
-        if (number <= 0) {
-          return errorMessage;
-        } else {
-          return null;
-        }
+        return number <= 0 ? errorMessage : null;
       };
 }
