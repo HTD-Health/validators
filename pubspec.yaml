@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   characters: 1.1.0
-  validators: 2.0.1
+  validators: 3.0.0
   flutter:
     sdk: flutter
 

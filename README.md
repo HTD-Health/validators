@@ -9,7 +9,7 @@ dependencies:
   validator:
     git: 
       url: https://github.com/HTD-Health/validators.git
-      ref: 0.1.0
+      ref: 0.2.0
 ```
 
 ## Usage
