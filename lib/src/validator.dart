@@ -144,8 +144,8 @@ abstract class Validators {
         }
       };
 
-  /// Returns an [errorMessage] when the value of a field is not a valid inteager.
-  static Validator inteager({
+  /// Returns an [errorMessage] when the value of a field is not a valid integer.
+  static Validator integer({
     @required errorMessage,
     bool trim = true,
   }) =>
@@ -157,7 +157,7 @@ abstract class Validators {
         return value.isInt ? null : errorMessage;
       };
 
-  /// Returns an [errorMessage] when the value of a field is not a valid inteager.
+  /// Returns an [errorMessage] when the value of a field contains characters other then numbers.
   static Validator numeric({
     @required errorMessage,
     bool trim = true,
@@ -170,7 +170,7 @@ abstract class Validators {
         return value.isNumeric ? null : errorMessage;
       };
 
-  /// Returns an [errorMessage] when the value of a field is not a valid inteager.
+  /// Returns an [errorMessage] when the value of a field is not a valid double.
   static Validator doubleValue({
     @required errorMessage,
     bool trim = true,
@@ -273,4 +273,20 @@ abstract class Validators {
     TextEditingController controller,
   }) =>
       (String text) => controller.value.text != text ? errorMessage : null;
+
+  ///Returns [errorMessage] when field value is not a [num] > 0.
+  static Validator positiveNumber({
+    @required String errorMessage,
+  }) =>
+      (String value) {
+        if (!value.isDouble) return errorMessage;
+
+        final number = num.parse(value);
+
+        if (number <= 0) {
+          return errorMessage;
+        } else {
+          return null;
+        }
+      };
 }
