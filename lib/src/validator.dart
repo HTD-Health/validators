@@ -279,7 +279,7 @@ abstract class Validators {
     @required String errorMessage,
   }) =>
       (String value) {
-        if (!value.isDouble) return errorMessage;
+        if (!value.isNumeric) return errorMessage;
         final number = num.parse(value);
         return number.isNegative ? errorMessage : null;
       };
@@ -287,10 +287,10 @@ abstract class Validators {
   ///Returns [errorMessage] when field value is not larger then [threshold].
   static Validator largerThan({
     @required String errorMessage,
-    double threshold = 0.0,
+    @required num threshold,
   }) =>
       (String value) {
-        if (!value.isDouble) return errorMessage;
+        if (!value.isNumeric) return errorMessage;
         final number = num.parse(value);
         return number <= threshold ? errorMessage : null;
       };
