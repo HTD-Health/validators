@@ -281,6 +281,17 @@ abstract class Validators {
       (String value) {
         if (!value.isDouble) return errorMessage;
         final number = num.parse(value);
-        return number <= 0 ? errorMessage : null;
+        return number.isNegative ? errorMessage : null;
+      };
+
+  ///Returns [errorMessage] when field value is not larger then [threshold].
+  static Validator largerThan({
+    @required String errorMessage,
+    double threshold = 0.0,
+  }) =>
+      (String value) {
+        if (!value.isDouble) return errorMessage;
+        final number = num.parse(value);
+        return number <= threshold ? errorMessage : null;
       };
 }
