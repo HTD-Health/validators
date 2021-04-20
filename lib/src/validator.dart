@@ -274,7 +274,7 @@ abstract class Validators {
   }) =>
       (String text) => controller.value.text != text ? errorMessage : null;
 
-  ///Returns [errorMessage] when field value is not a [num] > 0.
+  ///Returns [errorMessage] when field value is not a [num] >= 0.
   static Validator positiveNumber({
     @required String errorMessage,
   }) =>
