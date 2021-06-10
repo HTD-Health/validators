@@ -279,7 +279,7 @@ abstract class Validators {
     @required String errorMessage,
   }) =>
       (String value) {
-        if (!value.isNumeric) return errorMessage;
+        if (!(value.isInt || value.isDouble)) return errorMessage;
         final number = num.parse(value);
         return number.isNegative ? errorMessage : null;
       };
@@ -290,7 +290,7 @@ abstract class Validators {
     @required num threshold,
   }) =>
       (String value) {
-        if (!value.isNumeric) return errorMessage;
+        if (!(value.isInt || value.isDouble)) return errorMessage;
         final number = num.parse(value);
         return number <= threshold ? errorMessage : null;
       };
