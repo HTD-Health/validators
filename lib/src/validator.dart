@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:characters/characters.dart';
 import 'package:flutter/widgets.dart';
 import 'package:validator/src/type_defs.dart';
@@ -51,7 +50,7 @@ abstract class Validators {
           value = value.trim();
         }
 
-        String error;
+        String? error;
         for (final validator in validators) {
           final validationError = validator(value);
 
@@ -64,9 +63,9 @@ abstract class Validators {
 
   /// Used when validator is needed to be run against value in place of code,
   /// without depending on tear off mechanic.
-  static String manyPreSupplied({
-    @required String value,
-    @required List<Validator> validators,
+  static String? manyPreSupplied({
+    required String value,
+    required List<Validator> validators,
   }) {
     for (final validator in validators) {
       final error = validator(value);
@@ -88,13 +87,13 @@ abstract class Validators {
   /// Returns an [errorMessage] if field is empty.
   /// Can be understand as a `required` validator.
   static Validator notEmpty({
-    @required String errorMessage,
+    required String errorMessage,
     bool trim = true,
   }) =>
-      (String value) => value?.trim()?.isEmpty == true ? errorMessage : null;
+      (String value) => value.trim().isEmpty == true ? errorMessage : null;
 
   static Validator email({
-    @required String errorMessage,
+    required String errorMessage,
   }) =>
       (String value) => value.isEmail ? null : errorMessage;
 
@@ -107,10 +106,10 @@ abstract class Validators {
   /// '👩‍👩‍👧‍👦'.characters.length // → 1
   /// ```
   static Validator sizeInRange({
-    @required int minSize,
-    @required int maxSize,
-    @required String smallerThanMinError,
-    @required String largerThanMaxError,
+    required int minSize,
+    required int maxSize,
+    required String smallerThanMinError,
+    required String largerThanMaxError,
     bool trim = false,
   }) =>
       (String value) {
@@ -129,7 +128,7 @@ abstract class Validators {
 
   /// Returns an [errorMessage] when the field is not empty.
   static Validator empty({
-    @required String errorMessage,
+    required String errorMessage,
     bool trim = true,
   }) =>
       (String value) {
@@ -146,7 +145,7 @@ abstract class Validators {
 
   /// Returns an [errorMessage] when the value of a field is not a valid integer.
   static Validator integer({
-    @required errorMessage,
+    required errorMessage,
     bool trim = true,
   }) =>
       (String value) {
@@ -159,7 +158,7 @@ abstract class Validators {
 
   /// Returns an [errorMessage] when the value of a field contains characters other then numbers.
   static Validator numeric({
-    @required errorMessage,
+    required errorMessage,
     bool trim = true,
   }) =>
       (String value) {
@@ -172,7 +171,7 @@ abstract class Validators {
 
   /// Returns an [errorMessage] when the value of a field is not a valid double.
   static Validator doubleValue({
-    @required errorMessage,
+    required errorMessage,
     bool trim = true,
   }) =>
       (String value) {
@@ -185,9 +184,9 @@ abstract class Validators {
 
   ///Returns [errorMessage] when field value is not a [num] within provided [min]-[max] range.
   static Validator numberValueInRange({
-    @required String errorMessage,
-    @required num min,
-    @required num max,
+    required String errorMessage,
+    required num min,
+    required num max,
   }) =>
       (String value) {
         final number = num.parse(value);
@@ -201,8 +200,8 @@ abstract class Validators {
 
   /// Returns an [errorMessage] when field value length is not equal to [length]
   static Validator exactLength({
-    @required String errorMessage,
-    @required int length,
+    required String errorMessage,
+    required int length,
     bool trim = false,
   }) =>
       (String value) {
@@ -215,8 +214,8 @@ abstract class Validators {
 
   /// Same as [exactLength] but accepts array of all valid lengths.
   static Validator exactLengths({
-    @required String errorMessage,
-    @required List<int> lengths,
+    required String errorMessage,
+    required List<int> lengths,
   }) =>
       (String value) {
         assert(
@@ -231,7 +230,7 @@ abstract class Validators {
       };
 
   static Validator hasUppercaseLetters({
-    @required String errorMessage,
+    required String errorMessage,
     int uppercaseLettersCount = 1,
   }) =>
       (String value) {
@@ -251,7 +250,7 @@ abstract class Validators {
       };
 
   static Validator hasNumbers({
-    @required String errorMessage,
+    required String errorMessage,
     int numbersCount = 1,
   }) =>
       (String value) {
@@ -269,14 +268,14 @@ abstract class Validators {
       };
 
   static Validator sameAs({
-    @required String errorMessage,
-    TextEditingController controller,
+    required String errorMessage,
+    required TextEditingController controller,
   }) =>
       (String text) => controller.value.text != text ? errorMessage : null;
 
   ///Returns [errorMessage] when field value is not a [num] >= 0.
   static Validator positiveNumber({
-    @required String errorMessage,
+    required String errorMessage,
   }) =>
       (String value) {
         if (!(value.isInt || value.isDouble)) return errorMessage;
@@ -286,8 +285,8 @@ abstract class Validators {
 
   ///Returns [errorMessage] when field value is not larger then [threshold].
   static Validator largerThan({
-    @required String errorMessage,
-    @required num threshold,
+    required String errorMessage,
+    required num threshold,
   }) =>
       (String value) {
         if (!(value.isInt || value.isDouble)) return errorMessage;
