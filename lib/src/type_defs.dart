@@ -1,1 +1,1 @@
-typedef Validator = String? Function(String);
+typedef Validator = String? Function(String?);
