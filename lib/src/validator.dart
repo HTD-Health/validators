@@ -7,7 +7,7 @@ import 'package:validators/validators.dart' as validators;
 extension Validation on String {
   bool get isEmail => validators.isEmail(this);
   bool get isInt => validators.isInt(this);
-  bool get isDouble => validators.isFloat(this);
+  bool get isDouble => validators.isFloat(this.replaceAll(',', '.'));
   bool get isNumeric => validators.isNumeric(this);
   bool get isCreditCard => validators.isCreditCard(this);
   bool get isDate => validators.isDate(this);
