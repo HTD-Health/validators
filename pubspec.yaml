@@ -1,11 +1,10 @@
 name: validator
-description: A new Flutter package project.
+description: Package for common validation patterns.
 version: 0.0.1
-author:
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.17.0"
+  flutter: ">=2.0.0"
 
 dependencies:
   characters: 1.1.0
@@ -16,5 +15,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-flutter:
