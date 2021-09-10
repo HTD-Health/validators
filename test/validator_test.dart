@@ -557,18 +557,18 @@ void main() {
 
       errorMessage = validator.call('1 1  ');
       expect(errorMessage, 'error');
+
+      errorMessage = validator.call('1234  ');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call(' 12 4');
+      expect(errorMessage, 'error');
     });
     test('does not return error when called with exact length', () {
       errorMessage = validator.call('1234');
       expect(errorMessage, null);
 
-      errorMessage = validator.call('1234  ');
-      expect(errorMessage, null);
-
       errorMessage = validator.call('12 4');
-      expect(errorMessage, null);
-
-      errorMessage = validator.call(' 12 4');
       expect(errorMessage, null);
     });
   });
@@ -593,21 +593,21 @@ void main() {
 
       errorMessage = validator.call('11111');
       expect(errorMessage, 'error');
+
+      errorMessage = validator.call('1234  ');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('   123');
+      expect(errorMessage, 'error');
     });
     test('does not return error when called with supported length', () {
       errorMessage = validator.call('1234');
-      expect(errorMessage, null);
-
-      errorMessage = validator.call('1234  ');
       expect(errorMessage, null);
 
       errorMessage = validator.call('12 4');
       expect(errorMessage, null);
 
       errorMessage = validator.call('123');
-      expect(errorMessage, null);
-
-      errorMessage = validator.call(' 123');
       expect(errorMessage, null);
     });
   });

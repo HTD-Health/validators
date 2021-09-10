@@ -21,7 +21,7 @@ abstract class Validators {
   static Validator all(
     List<Validator> validators, {
     bool successOnEmpty = false,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -42,7 +42,7 @@ abstract class Validators {
   /// otherwise first error will be returned.
   static Validator oneOf(
     List<Validator> validators, {
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -85,7 +85,7 @@ abstract class Validators {
   /// Can be understand as a `required` validator.
   static Validator notEmpty({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -96,7 +96,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value is not a valid email.
   static Validator email({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -107,7 +107,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value is not an integer.
   static Validator integer({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -119,7 +119,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value is not a double.
   static Validator double({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -131,7 +131,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value is not a double or an integer.
   static Validator number({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -155,7 +155,7 @@ abstract class Validators {
     required int maxSize,
     required String smallerThanMinError,
     required String largerThanMaxError,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -173,7 +173,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value is not empty.
   static Validator empty({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -184,7 +184,7 @@ abstract class Validators {
   /// Returns [errorMessage] when the value contains characters other then numbers.
   static Validator numeric({
     required errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -197,7 +197,7 @@ abstract class Validators {
     required String errorMessage,
     required num min,
     required num max,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -217,7 +217,7 @@ abstract class Validators {
   static Validator exactLength({
     required String errorMessage,
     required int length,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         assert(length >= 0, 'length must be greater than or equal to 0');
@@ -231,7 +231,7 @@ abstract class Validators {
   static Validator exactLengths({
     required String errorMessage,
     required List<int> lengths,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         assert(lengths.isNotEmpty, 'lengths must contain at least one element');
@@ -248,7 +248,7 @@ abstract class Validators {
   static Validator hasUppercaseLetters({
     required String errorMessage,
     int minUppercaseLettersCount = 1,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -274,7 +274,7 @@ abstract class Validators {
   static Validator hasDigits({
     required String errorMessage,
     int minDigitsCount = 1,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -297,7 +297,7 @@ abstract class Validators {
   static Validator sameAs({
     required String errorMessage,
     required String other,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -311,7 +311,7 @@ abstract class Validators {
   /// Returns [errorMessage] when value is not larger or equal to 0.
   static Validator positiveNumber({
     required String errorMessage,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -326,7 +326,7 @@ abstract class Validators {
   static Validator largerThan({
     required String errorMessage,
     required num threshold,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -340,7 +340,7 @@ abstract class Validators {
   static Validator smallerThan({
     required String errorMessage,
     required num threshold,
-    bool trim = true,
+    bool trim = false,
   }) =>
       (String? value) {
         if (value == null) return null;
