@@ -204,7 +204,7 @@ abstract class Validators {
         return value.isNumeric ? null : errorMessage;
       };
 
-  ///Returns [errorMessage] when value is not a number within provided [min]-[max] range.
+  /// Returns [errorMessage] when value is not a number within provided [min]-[max] range.
   static Validator numberValueInRange({
     required String errorMessage,
     required num min,
@@ -214,6 +214,8 @@ abstract class Validators {
       (String? value) {
         if (value == null) return null;
         if (trim) value = value.trim();
+        if (value.isEmpty) return errorMessage;
+
         final number = num.parse(value.replaceFirst(',', '.'));
 
         if (number < min || number > max) {
@@ -230,6 +232,7 @@ abstract class Validators {
     bool trim = true,
   }) =>
       (String? value) {
+        assert(length >= 0, 'length must be greater than or equal to 0');
         if (value == null) return null;
         if (trim) value = value.trim();
 
@@ -240,14 +243,12 @@ abstract class Validators {
   static Validator exactLengths({
     required String errorMessage,
     required List<int> lengths,
+    bool trim = true,
   }) =>
       (String? value) {
+        assert(lengths.isNotEmpty, 'lengths must contain at least one element');
         if (value == null) return null;
-
-        assert(
-          lengths.isNotEmpty,
-          'Acceptable lengths must contian at least one element',
-        );
+        if (trim) value = value.trim();
 
         if (!lengths.contains(value.length)) {
           return errorMessage;
@@ -255,37 +256,42 @@ abstract class Validators {
         return null;
       };
 
+  /// Returns [errorMessage] when value does not contain at least [minUppercaseLettersCount] uppercase letters.
   static Validator hasUppercaseLetters({
     required String errorMessage,
-    int uppercaseLettersCount = 1,
+    int minUppercaseLettersCount = 1,
     bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
         if (trim) value = value.trim();
+
         int count = 0;
 
         for (int i = 0; i < value.length; i++) {
           final String letter = value[i];
+          if (letter == ' ') continue;
           if (validators.isUppercase(letter)) {
             count++;
           }
         }
 
-        if (count < uppercaseLettersCount) {
+        if (count < minUppercaseLettersCount) {
           return errorMessage;
         }
         return null;
       };
 
-  static Validator hasNumbers({
+  /// Returns [errorMessage] when value does not contain at least [minDigitsCount] digits
+  static Validator hasDigits({
     required String errorMessage,
-    int numbersCount = 1,
+    int minDigitsCount = 1,
     bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
         if (trim) value = value.trim();
+
         int count = 0;
         for (int i = 0; i < value.length; i++) {
           final String letter = value[i];
@@ -293,24 +299,28 @@ abstract class Validators {
             count++;
           }
         }
-        if (count < numbersCount) {
+        if (count < minDigitsCount) {
           return errorMessage;
         }
         return null;
       };
 
+  /// Returns [errorMessage] when value is not equal to [other].
   static Validator sameAs({
     required String errorMessage,
-    required TextEditingController controller,
+    required String other,
     bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
-        if (trim) value = value.trim();
-        return controller.value.text != value ? errorMessage : null;
+        if (trim) {
+          value = value.trim();
+          other = other.trim();
+        }
+        return value == other ? null : errorMessage;
       };
 
-  ///Returns [errorMessage] when field value is not larger or equal to 0.
+  /// Returns [errorMessage] when value is not larger or equal to 0.
   static Validator positiveNumber({
     required String errorMessage,
     bool trim = true,
@@ -324,7 +334,7 @@ abstract class Validators {
         return number.isNegative ? errorMessage : null;
       };
 
-  ///Returns [errorMessage] when field value is not larger then [threshold].
+  /// Returns [errorMessage] when value is not larger then [threshold].
   static Validator largerThan({
     required String errorMessage,
     required num threshold,
@@ -338,7 +348,7 @@ abstract class Validators {
         return number <= threshold ? errorMessage : null;
       };
 
-  ///Returns [errorMessage] when field value is not smaller then [threshold].
+  /// Returns [errorMessage] when value is not smaller then [threshold].
   static Validator smallerThan({
     required String errorMessage,
     required num threshold,

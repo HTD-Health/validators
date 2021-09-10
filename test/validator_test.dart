@@ -357,6 +357,133 @@ void main() {
     });
   });
 
+  group('Validators.smallerThan', () {
+    Validator validator = Validators.smallerThan(errorMessage: 'error', threshold: 10);
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns error when called with empty string', () {
+      errorMessage = validator.call('');
+      expect(errorMessage, 'error');
+    });
+    test('returns error when called with not a number string', () {
+      errorMessage = validator.call('a');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('!');
+      expect(errorMessage, 'error');
+    });
+    test('returns error when called with number higher then threshold', () {
+      errorMessage = validator.call('10.1');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('11');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('10,11');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('100.0');
+      expect(errorMessage, 'error');
+    });
+    test('returns error when called with number equal to threshold', () {
+      errorMessage = validator.call('10');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('10.0');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('10,00');
+      expect(errorMessage, 'error');
+    });
+    test('does not return error when called with number smaller then threshold', () {
+      errorMessage = validator.call('9.1');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('9,1');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('1');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('-9');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.hasDigits -', () {
+    String? errorMessage;
+
+    group('minDigitsCount is 1 -', () {
+      Validator validator = Validators.hasDigits(errorMessage: 'error');
+
+      test('does not return error when called with null', () {
+        errorMessage = validator.call(null);
+        expect(errorMessage, null);
+      });
+      test('returns error when called with empty string', () {
+        errorMessage = validator.call('');
+        expect(errorMessage, 'error');
+      });
+      test('returns error when called with string not containing any digits', () {
+        errorMessage = validator.call('abcd');
+        expect(errorMessage, 'error');
+      });
+      test('does not return error when called with value containing at least 1 digit', () {
+        errorMessage = validator.call('abc1def');
+        expect(errorMessage, null);
+
+        errorMessage = validator.call('abc123def');
+        expect(errorMessage, null);
+
+        errorMessage = validator.call('1');
+        expect(errorMessage, null);
+
+        errorMessage = validator.call('1.23abc');
+        expect(errorMessage, null);
+      });
+    });
+
+    group('minDigitsCount is 4', () {
+      Validator validator = Validators.hasDigits(errorMessage: 'error', minDigitsCount: 4);
+      test('does not return error when called with value containing at least minDigitsCount digits', () {
+        errorMessage = validator.call('abc1234def');
+        expect(errorMessage, null);
+
+        errorMessage = validator.call('abc12345def');
+        expect(errorMessage, null);
+      });
+      test('returns error when called with value containing less than minDigitsCount digits', () {
+        errorMessage = validator.call('abc123def');
+        expect(errorMessage, 'error');
+
+        errorMessage = validator.call('abc');
+        expect(errorMessage, 'error');
+      });
+    });
+  });
+
+  group('Validators.sameAs', () {
+    Validator validator = Validators.sameAs(errorMessage: 'error', other: 'other');
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('does not return error when called with mathing values', () {
+      errorMessage = validator.call('other');
+      expect(errorMessage, null);
+    });
+    test('returns error when called with non-mathing values', () {
+      errorMessage = validator.call('different');
+      expect(errorMessage, 'error');
+    });
+  });
+
   group('Validators.oneOf -', () {
     Validator validator = Validators.oneOf([
       Validators.notEmpty(errorMessage: 'error1'),
@@ -400,6 +527,164 @@ void main() {
     });
     test('does not return error when all validators pass', () {
       errorMessage = validator.call('12');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.exactLength -', () {
+    Validator validator = Validators.exactLength(errorMessage: 'error', length: 4);
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns error when called with different length', () {
+      errorMessage = validator.call('1');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('11');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('111');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('11111');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('1 1  ');
+      expect(errorMessage, 'error');
+    });
+    test('does not return error when called with exact length', () {
+      errorMessage = validator.call('1234');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('1234  ');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('12 4');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call(' 12 4');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.exactLengths -', () {
+    Validator validator = Validators.exactLengths(errorMessage: 'error', lengths: [3, 4]);
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns error when called with not supported length', () {
+      errorMessage = validator.call('1');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('11');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('11111');
+      expect(errorMessage, 'error');
+    });
+    test('does not return error when called with supported length', () {
+      errorMessage = validator.call('1234');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('1234  ');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('12 4');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('123');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call(' 123');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.hasUppercaseLetters -', () {
+    Validator validator = Validators.hasUppercaseLetters(errorMessage: 'error');
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns error when called with empty string', () {
+      errorMessage = validator.call('');
+      expect(errorMessage, 'error');
+    });
+    test('returns error when called with no uppercase letters', () {
+      errorMessage = validator.call('only lowercase letters here');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('abc');
+      expect(errorMessage, 'error');
+    });
+    test('does not return error when called with 1 or more uppercase letters', () {
+      errorMessage = validator.call('Uppercase letter here');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('ALL CAPS');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.numberValueInRange -', () {
+    Validator validator = Validators.numberValueInRange(errorMessage: 'error', min: 5, max: 8);
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns error when called with empty string', () {
+      errorMessage = validator.call('');
+      expect(errorMessage, 'error');
+    });
+    test('returns error when called with number not in range', () {
+      errorMessage = validator.call('4');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('4.9');
+      expect(errorMessage, 'error');
+
+      errorMessage = validator.call('4,9');
+      expect(errorMessage, 'error');
+    });
+    test('does not return error when called with number in range', () {
+      errorMessage = validator.call('5');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('5,0');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('5.0');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('5.5');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('5,5');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('6');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('8');
+      expect(errorMessage, null);
+
+      errorMessage = validator.call('8.0');
       expect(errorMessage, null);
     });
   });
