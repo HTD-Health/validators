@@ -43,7 +43,7 @@ void main() {
     });
   });
 
-  group('Validators.isEmail -', () {
+  group('Validators.email -', () {
     Validator validator = Validators.email(errorMessage: 'error');
     String? errorMessage;
 
@@ -89,7 +89,7 @@ void main() {
     });
   });
 
-  group('Validators.isInt', () {
+  group('Validators.integer', () {
     Validator validator = Validators.integer(errorMessage: 'error');
     String? errorMessage;
 
@@ -144,7 +144,7 @@ void main() {
     });
   });
 
-  group('Validators.isDouble', () {
+  group('Validators.double', () {
     Validator validator = Validators.double(errorMessage: 'error');
     String? errorMessage;
 
@@ -205,7 +205,7 @@ void main() {
     });
   });
 
-  group('Validators.isNumber -', () {
+  group('Validators.number -', () {
     Validator validator = Validators.number(errorMessage: 'error');
     String? errorMessage;
 
@@ -378,6 +378,28 @@ void main() {
     });
     test('does not return error when all validators pass', () {
       errorMessage = validator.call('test@test.com');
+      expect(errorMessage, null);
+    });
+  });
+
+  group('Validators.all -', () {
+    Validator validator = Validators.all([
+      Validators.integer(errorMessage: 'error1'),
+      Validators.positiveNumber(errorMessage: 'error2'),
+      Validators.largerThan(errorMessage: 'error2', threshold: 10),
+    ]);
+    String? errorMessage;
+
+    test('does not return error when called with null', () {
+      errorMessage = validator.call(null);
+      expect(errorMessage, null);
+    });
+    test('returns second validator error when the 1st and 3rd validators pass but the 2nd does not', () {
+      errorMessage = validator.call('5');
+      expect(errorMessage, 'error2');
+    });
+    test('does not return error when all validators pass', () {
+      errorMessage = validator.call('12');
       expect(errorMessage, null);
     });
   });

@@ -33,7 +33,7 @@ abstract class Validators {
   static Validator all(
     List<Validator> validators, {
     bool successOnEmpty = false,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -54,7 +54,7 @@ abstract class Validators {
   /// otherwise first error will be returned.
   static Validator oneOf(
     List<Validator> validators, {
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -155,7 +155,7 @@ abstract class Validators {
       };
 
   /// This method is counting characters instead of the string length, thanks to that every
-  /// emoji will be counted as a single char instead instead of the real string length:
+  /// emoji will be counted as a single char instead of the real string length:
   ///
   /// example:
   /// ```
@@ -167,7 +167,7 @@ abstract class Validators {
     required int maxSize,
     required String smallerThanMinError,
     required String largerThanMaxError,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -209,7 +209,7 @@ abstract class Validators {
     required String errorMessage,
     required num min,
     required num max,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -227,7 +227,7 @@ abstract class Validators {
   static Validator exactLength({
     required String errorMessage,
     required int length,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -258,7 +258,7 @@ abstract class Validators {
   static Validator hasUppercaseLetters({
     required String errorMessage,
     int uppercaseLettersCount = 1,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -281,7 +281,7 @@ abstract class Validators {
   static Validator hasNumbers({
     required String errorMessage,
     int numbersCount = 1,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -302,7 +302,7 @@ abstract class Validators {
   static Validator sameAs({
     required String errorMessage,
     required TextEditingController controller,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -313,7 +313,7 @@ abstract class Validators {
   ///Returns [errorMessage] when field value is not larger or equal to 0.
   static Validator positiveNumber({
     required String errorMessage,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -328,7 +328,7 @@ abstract class Validators {
   static Validator largerThan({
     required String errorMessage,
     required num threshold,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
@@ -342,7 +342,7 @@ abstract class Validators {
   static Validator smallerThan({
     required String errorMessage,
     required num threshold,
-    bool trim = false,
+    bool trim = true,
   }) =>
       (String? value) {
         if (value == null) return null;
