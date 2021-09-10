@@ -6,21 +6,9 @@ typedef Validator = String? Function(String?);
 
 extension Validation on String {
   bool get isEmail => validators.isEmail(this);
-  bool get isInt {
-    if (this.isEmpty) return false;
-    return int.tryParse(this) != null;
-  }
-
-  bool get isDouble {
-    if (this.isEmpty) return false;
-    return double.tryParse(this.replaceFirst(',', '.')) != null;
-  }
-
-  bool get isNumber {
-    if (this.isEmpty) return false;
-    return this.isInt || this.isDouble;
-  }
-
+  bool get isInt => int.tryParse(this) != null;
+  bool get isDouble => double.tryParse(this.replaceFirst(',', '.')) != null;
+  bool get isNumber => this.isInt || this.isDouble;
   bool get isNumeric => validators.isNumeric(this);
   bool get isCreditCard => validators.isCreditCard(this);
   bool get isDate => validators.isDate(this);
