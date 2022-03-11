@@ -7,7 +7,7 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  characters: 1.1.0
+  characters: 1.2.0
   validators: 3.0.0
   flutter:
     sdk: flutter
