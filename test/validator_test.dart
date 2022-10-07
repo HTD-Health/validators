@@ -4,7 +4,8 @@ import 'package:validator/validator.dart';
 void main() {
   group('Validators.notEmpty -', () {
     group('trim is true -', () {
-      Validator validator = Validators.notEmpty(errorMessage: 'error', trim: true);
+      final Validator validator =
+          Validators.notEmpty(errorMessage: 'error', trim: true);
       String? errorMessage;
 
       test('returns no error when called with null', () {
@@ -29,7 +30,8 @@ void main() {
     });
 
     group('trim is false -', () {
-      Validator validator = Validators.notEmpty(errorMessage: 'error', trim: false);
+      final Validator validator =
+          Validators.notEmpty(errorMessage: 'error', trim: false);
       String? errorMessage;
 
       test('does not return error when called with only spaces', () {
@@ -44,7 +46,7 @@ void main() {
   });
 
   group('Validators.email -', () {
-    Validator validator = Validators.email(errorMessage: 'error');
+    final Validator validator = Validators.email(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -90,7 +92,7 @@ void main() {
   });
 
   group('Validators.integer', () {
-    Validator validator = Validators.integer(errorMessage: 'error');
+    final Validator validator = Validators.integer(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -145,7 +147,7 @@ void main() {
   });
 
   group('Validators.double', () {
-    Validator validator = Validators.double(errorMessage: 'error');
+    final Validator validator = Validators.double(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -206,7 +208,7 @@ void main() {
   });
 
   group('Validators.number -', () {
-    Validator validator = Validators.number(errorMessage: 'error');
+    final Validator validator = Validators.number(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -252,7 +254,8 @@ void main() {
   });
 
   group('Validators.positiveNumber', () {
-    Validator validator = Validators.positiveNumber(errorMessage: 'error');
+    final Validator validator =
+        Validators.positiveNumber(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -301,7 +304,8 @@ void main() {
   });
 
   group('Validators.largerThan', () {
-    Validator validator = Validators.largerThan(errorMessage: 'error', threshold: 10);
+    final Validator validator =
+        Validators.largerThan(errorMessage: 'error', threshold: 10);
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -342,7 +346,8 @@ void main() {
       errorMessage = validator.call('10,00');
       expect(errorMessage, 'error');
     });
-    test('does not return error when called with number larger then threshold', () {
+    test('does not return error when called with number larger then threshold',
+        () {
       errorMessage = validator.call('10.1');
       expect(errorMessage, null);
 
@@ -358,7 +363,8 @@ void main() {
   });
 
   group('Validators.smallerThan', () {
-    Validator validator = Validators.smallerThan(errorMessage: 'error', threshold: 10);
+    final Validator validator =
+        Validators.smallerThan(errorMessage: 'error', threshold: 10);
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -399,7 +405,8 @@ void main() {
       errorMessage = validator.call('10,00');
       expect(errorMessage, 'error');
     });
-    test('does not return error when called with number smaller then threshold', () {
+    test('does not return error when called with number smaller then threshold',
+        () {
       errorMessage = validator.call('9.1');
       expect(errorMessage, null);
 
@@ -418,7 +425,7 @@ void main() {
     String? errorMessage;
 
     group('minDigitsCount is 1 -', () {
-      Validator validator = Validators.hasDigits(errorMessage: 'error');
+      final Validator validator = Validators.hasDigits(errorMessage: 'error');
 
       test('does not return error when called with null', () {
         errorMessage = validator.call(null);
@@ -428,11 +435,14 @@ void main() {
         errorMessage = validator.call('');
         expect(errorMessage, 'error');
       });
-      test('returns error when called with string not containing any digits', () {
+      test('returns error when called with string not containing any digits',
+          () {
         errorMessage = validator.call('abcd');
         expect(errorMessage, 'error');
       });
-      test('does not return error when called with value containing at least 1 digit', () {
+      test(
+          'does not return error when called with value containing '
+          'at least 1 digit', () {
         errorMessage = validator.call('abc1def');
         expect(errorMessage, null);
 
@@ -448,15 +458,20 @@ void main() {
     });
 
     group('minDigitsCount is 4', () {
-      Validator validator = Validators.hasDigits(errorMessage: 'error', minDigitsCount: 4);
-      test('does not return error when called with value containing at least minDigitsCount digits', () {
+      final Validator validator =
+          Validators.hasDigits(errorMessage: 'error', minDigitsCount: 4);
+      test(
+          'does not return error when called with value containing at least'
+          ' minDigitsCount digits', () {
         errorMessage = validator.call('abc1234def');
         expect(errorMessage, null);
 
         errorMessage = validator.call('abc12345def');
         expect(errorMessage, null);
       });
-      test('returns error when called with value containing less than minDigitsCount digits', () {
+      test(
+          'returns error when called with value containing less than'
+          ' minDigitsCount digits', () {
         errorMessage = validator.call('abc123def');
         expect(errorMessage, 'error');
 
@@ -467,7 +482,8 @@ void main() {
   });
 
   group('Validators.sameAs', () {
-    Validator validator = Validators.sameAs(errorMessage: 'error', other: 'other');
+    final Validator validator =
+        Validators.sameAs(errorMessage: 'error', other: 'other');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -485,7 +501,7 @@ void main() {
   });
 
   group('Validators.oneOf -', () {
-    Validator validator = Validators.oneOf([
+    final Validator validator = Validators.oneOf([
       Validators.notEmpty(errorMessage: 'error1'),
       Validators.email(errorMessage: 'error2'),
     ]);
@@ -499,7 +515,9 @@ void main() {
       errorMessage = validator.call('');
       expect(errorMessage, 'error1');
     });
-    test('returns second validator error when the first validator passess but the second one does not', () {
+    test(
+        'returns second validator error when the first validator passess but '
+        'the second one does not', () {
       errorMessage = validator.call('asdasd');
       expect(errorMessage, 'error2');
     });
@@ -510,7 +528,7 @@ void main() {
   });
 
   group('Validators.all -', () {
-    Validator validator = Validators.all([
+    final Validator validator = Validators.all([
       Validators.integer(errorMessage: 'error1'),
       Validators.positiveNumber(errorMessage: 'error2'),
       Validators.largerThan(errorMessage: 'error2', threshold: 10),
@@ -521,7 +539,9 @@ void main() {
       errorMessage = validator.call(null);
       expect(errorMessage, null);
     });
-    test('returns second validator error when the 1st and 3rd validators pass but the 2nd does not', () {
+    test(
+        'returns second validator error when the 1st and 3rd validators'
+        ' pass but the 2nd does not', () {
       errorMessage = validator.call('5');
       expect(errorMessage, 'error2');
     });
@@ -532,7 +552,8 @@ void main() {
   });
 
   group('Validators.exactLength -', () {
-    Validator validator = Validators.exactLength(errorMessage: 'error', length: 4);
+    final Validator validator =
+        Validators.exactLength(errorMessage: 'error', length: 4);
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -574,7 +595,8 @@ void main() {
   });
 
   group('Validators.exactLengths -', () {
-    Validator validator = Validators.exactLengths(errorMessage: 'error', lengths: [3, 4]);
+    final Validator validator =
+        Validators.exactLengths(errorMessage: 'error', lengths: [3, 4]);
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -613,7 +635,8 @@ void main() {
   });
 
   group('Validators.hasUppercaseLetters -', () {
-    Validator validator = Validators.hasUppercaseLetters(errorMessage: 'error');
+    final Validator validator =
+        Validators.hasUppercaseLetters(errorMessage: 'error');
     String? errorMessage;
 
     test('does not return error when called with null', () {
@@ -631,7 +654,8 @@ void main() {
       errorMessage = validator.call('abc');
       expect(errorMessage, 'error');
     });
-    test('does not return error when called with 1 or more uppercase letters', () {
+    test('does not return error when called with 1 or more uppercase letters',
+        () {
       errorMessage = validator.call('Uppercase letter here');
       expect(errorMessage, null);
 
@@ -641,7 +665,8 @@ void main() {
   });
 
   group('Validators.numberValueInRange -', () {
-    Validator validator = Validators.numberValueInRange(errorMessage: 'error', min: 5, max: 8);
+    final Validator validator =
+        Validators.numberValueInRange(errorMessage: 'error', min: 5, max: 8);
     String? errorMessage;
 
     test('does not return error when called with null', () {
