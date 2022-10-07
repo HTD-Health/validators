@@ -1,5 +1,4 @@
 import 'package:characters/characters.dart';
-import 'package:flutter/widgets.dart';
 import 'package:validators/validators.dart' as validators;
 
 typedef Validator = String? Function(String?);
@@ -7,8 +6,8 @@ typedef Validator = String? Function(String?);
 extension Validation on String {
   bool get isEmail => validators.isEmail(this);
   bool get isInt => int.tryParse(this) != null;
-  bool get isDouble => double.tryParse(this.replaceFirst(',', '.')) != null;
-  bool get isNumber => this.isInt || this.isDouble;
+  bool get isDouble => double.tryParse(replaceFirst(',', '.')) != null;
+  bool get isNumber => isInt || isDouble;
   bool get isNumeric => validators.isNumeric(this);
   bool get isCreditCard => validators.isCreditCard(this);
   bool get isDate => validators.isDate(this);
@@ -142,8 +141,9 @@ abstract class Validators {
         return errorMessage;
       };
 
-  /// This method is counting characters instead of the string length, thanks to that every
-  /// emoji will be counted as a single char instead of the real string length:
+  /// This method is counting characters instead of the string length,
+  /// thanks to that every emoji will be counted as a single char
+  /// instead of the real string length:
   ///
   /// example:
   /// ```
@@ -181,9 +181,10 @@ abstract class Validators {
         return value.isEmpty ? null : errorMessage;
       };
 
-  /// Returns [errorMessage] when the value contains characters other then numbers.
+  /// Returns [errorMessage] when the value contains characters other
+  /// than numbers.
   static Validator numeric({
-    required errorMessage,
+    required String errorMessage,
     bool trim = false,
   }) =>
       (String? value) {
@@ -192,7 +193,8 @@ abstract class Validators {
         return value.isNumeric ? null : errorMessage;
       };
 
-  /// Returns [errorMessage] when value is not a number within provided [min]-[max] range.
+  /// Returns [errorMessage] when value is not a number within provided
+  /// [min]-[max] range.
   static Validator numberValueInRange({
     required String errorMessage,
     required num min,
@@ -244,7 +246,8 @@ abstract class Validators {
         return null;
       };
 
-  /// Returns [errorMessage] when value does not contain at least [minUppercaseLettersCount] uppercase letters.
+  /// Returns [errorMessage] when value does not contain at least
+  /// [minUppercaseLettersCount] uppercase letters.
   static Validator hasUppercaseLetters({
     required String errorMessage,
     int minUppercaseLettersCount = 1,
@@ -270,7 +273,8 @@ abstract class Validators {
         return null;
       };
 
-  /// Returns [errorMessage] when value does not contain at least [minDigitsCount] digits
+  /// Returns [errorMessage] when value does not contain
+  /// at least [minDigitsCount] digits
   static Validator hasDigits({
     required String errorMessage,
     int minDigitsCount = 1,
