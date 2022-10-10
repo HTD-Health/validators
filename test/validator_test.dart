@@ -278,7 +278,7 @@ void main() {
 
     setUp(() {
       validator = Validators.maximumLength(
-        maxSize: 3,
+        maximumLength: 3,
         errorMessage: 'Error string',
       );
     });
@@ -293,7 +293,7 @@ void main() {
 
     setUp(() {
       validator = Validators.minimumLength(
-        minSize: 3,
+        minimumLength: 3,
         errorMessage: 'Error string',
       );
     });

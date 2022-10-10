@@ -180,7 +180,7 @@ abstract class Validators {
   /// '👩‍👩‍👧‍👦'.characters.length // → 1
   /// ```
   static Validator minimumLength({
-    required int minSize,
+    required int minimumLength,
     required String errorMessage,
     bool trim = false,
   }) =>
@@ -188,7 +188,7 @@ abstract class Validators {
         if (value == null) return null;
         if (trim) value = value.trim();
 
-        if (value.length < minSize) {
+        if (value.length < minimumLength) {
           return errorMessage;
         }
 
@@ -205,7 +205,7 @@ abstract class Validators {
   /// '👩‍👩‍👧‍👦'.characters.length // → 1
   /// ```
   static Validator maximumLength({
-    required int maxSize,
+    required int maximumLength,
     required String errorMessage,
     bool trim = false,
   }) =>
@@ -213,7 +213,7 @@ abstract class Validators {
         if (value == null) return null;
         if (trim) value = value.trim();
 
-        if (value.characters.length > maxSize) {
+        if (value.characters.length > maximumLength) {
           return errorMessage;
         }
         return null;
