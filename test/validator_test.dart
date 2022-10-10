@@ -273,6 +273,21 @@ void main() {
     });
   });
 
+  group('Validators.minimumLength', () {
+    late Validator validator;
+
+    setUp(() {
+      validator = Validators.minimumLength(
+        minSize: 3,
+        errorMessage: 'Error string',
+      );
+    });
+
+    test('does not allow values shorter than minimum', () {
+      expect(validator.call('12'), 'Error string');
+    });
+  });
+
   group('Validators.positiveNumber', () {
     final Validator validator =
         Validators.positiveNumber(errorMessage: 'error');
