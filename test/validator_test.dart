@@ -273,6 +273,21 @@ void main() {
     });
   });
 
+  group('Validators.maximumLength', () {
+    late Validator validator;
+
+    setUp(() {
+      validator = Validators.maximumLength(
+        maxSize: 3,
+        errorMessage: 'Error string',
+      );
+    });
+
+    test('does not allow values longer than minimum', () {
+      expect(validator.call('1234'), 'Error string');
+    });
+  });
+
   group('Validators.minimumLength', () {
     late Validator validator;
 

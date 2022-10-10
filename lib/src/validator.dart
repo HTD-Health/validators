@@ -194,6 +194,31 @@ abstract class Validators {
 
         return null;
       };
+
+  /// This method is counting characters instead of the string length,
+  /// thanks to that every emoji will be counted as a single char
+  /// instead of the real string length:
+  ///
+  /// example:
+  /// ```
+  /// '👩‍👩‍👧‍👦'.length // → 11
+  /// '👩‍👩‍👧‍👦'.characters.length // → 1
+  /// ```
+  static Validator maximumLength({
+    required int maxSize,
+    required String errorMessage,
+    bool trim = false,
+  }) =>
+      (String? value) {
+        if (value == null) return null;
+        if (trim) value = value.trim();
+
+        if (value.characters.length > maxSize) {
+          return errorMessage;
+        }
+        return null;
+      };
+
   /// Returns [errorMessage] when the value is not empty.
   static Validator empty({
     required String errorMessage,
