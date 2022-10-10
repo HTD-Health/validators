@@ -151,23 +151,32 @@ abstract class Validators {
   /// '👩‍👩‍👧‍👦'.characters.length // → 1
   /// ```
   static Validator sizeInRange({
-    required int minSize,
-    required int maxSize,
-    required String smallerThanMinError,
-    required String largerThanMaxError,
+    int? minSize,
+    int? maxSize,
+    String? smallerThanMinError,
+    String? largerThanMaxError,
     bool trim = false,
   }) =>
       (String? value) {
+        if (minSize != null && smallerThanMinError == null) {
+          throw Exception('No error string for minSize param');
+        }
+        if (maxSize != null && largerThanMaxError == null) {
+          throw Exception('No error for maxSize param');
+        }
+        if (minSize == null && maxSize == null) {
+          throw Exception('At least one param of range must be set');
+        }
         if (value == null) return null;
         if (trim) value = value.trim();
 
-        if (value.length < minSize) {
+        if (minSize != null && value.length < minSize) {
           return smallerThanMinError;
-        } else if (value.characters.length > maxSize) {
-          return largerThanMaxError;
-        } else {
-          return null;
         }
+        if (maxSize != null && value.characters.length > maxSize) {
+          return largerThanMaxError;
+        }
+        return null;
       };
 
   /// Returns [errorMessage] when the value is not empty.

@@ -253,6 +253,37 @@ void main() {
     });
   });
 
+  group('Validators.sizeInRange', () {
+    setUp(() {});
+    test('does not allow values shorter than minimum', () {
+      final Validator validator = Validators.sizeInRange(
+        minSize: 5,
+        smallerThanMinError: 'Error string',
+      );
+      expect(validator.call('1234'), 'Error string');
+    });
+
+    test('does not allow values longer than max', () {
+      final Validator validator = Validators.sizeInRange(
+        maxSize: 5,
+        largerThanMaxError: 'Error string',
+      );
+      expect(validator.call('123456'), 'Error string');
+    });
+    test('enforces range extremes', () {
+      final Validator validator = Validators.sizeInRange();
+      expect(() => validator.call('4'), throwsException);
+    });
+
+    test('enforces min param error string', () {
+      final Validator validator = Validators.sizeInRange(minSize: 1);
+      expect(() => validator.call('4'), throwsException);
+    });
+    test('enforces max param error string', () {
+      final Validator validator = Validators.sizeInRange(maxSize: 1);
+      expect(() => validator.call('4'), throwsException);
+    });
+  });
   group('Validators.positiveNumber', () {
     final Validator validator =
         Validators.positiveNumber(errorMessage: 'error');
