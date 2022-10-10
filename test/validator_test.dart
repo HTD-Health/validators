@@ -253,6 +253,26 @@ void main() {
     });
   });
 
+  group('Validators.sizeInRange', () {
+    late Validator validator;
+    setUp(() {
+      validator = Validators.sizeInRange(
+        minSize: 2,
+        maxSize: 6,
+        smallerThanMinError: 'Error string',
+        largerThanMaxError: 'Error string',
+      );
+    });
+
+    test('does not allow values shorter than minimum', () {
+      expect(validator.call('1'), 'Error string');
+    });
+
+    test('does not allow values longer than max', () {
+      expect(validator.call('1234567'), 'Error string');
+    });
+  });
+
   group('Validators.positiveNumber', () {
     final Validator validator =
         Validators.positiveNumber(errorMessage: 'error');
